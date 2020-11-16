@@ -41,7 +41,7 @@ def notify(items_found):
         quit()
     else:
         items = ", ".join(items_found)
-        subprocess.Popen(["/usr/bin/notify-send", "-u", "critical",
+        subprocess.Popen(["/usr/bin/notify-send", "-u", "normal",
                           "{} em promoção!".format(items)])
 
 
