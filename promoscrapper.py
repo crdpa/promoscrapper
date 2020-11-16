@@ -36,16 +36,6 @@ def find_item(items, page_string):
     return items_found
 
 
-def notify(items_found):
-    if not items_found:
-        quit()
-    else:
-        items = ", ".join(items_found)
-        subprocess.Popen(["/usr/bin/notify-send", "-u", "normal",
-                          "-t", "60000",
-                          "{} em promoção!".format(items)])
-
-
 def main():
     parser = argparse.ArgumentParser(description="Search for items on sale.")
     parser.add_argument("-i", "--items", type=str, required=True, nargs="+",
@@ -54,9 +44,17 @@ def main():
     args = parser.parse_args()
     items = args.items
     url = args.url
+
     html = read_page(url)
     results = find_item(items, html)
-    notify(results)
+
+    if not results:
+        quit()
+    else:
+        items = ", ".join(results)
+        subprocess.Popen(["/usr/bin/notify-send", "-u", "normal",
+                          "-t", "60000",
+                          "{} em promoção!".format(items)])
 
 
 if __name__ == "__main__":
